@@ -1,7 +1,28 @@
 <html>
 <body>
-Hello, {{login_name}} logged in!
+Hello, {{login-name}}'s logged in!
 
+<form action = "create-golfer" method = "post">
+    <input type = "text" placeholder="Golfer Name" name = "golfer_name"/>
+    <select name = "sponsor_name">
+        <option value="Titleist">Titleist</option>
+        <option value="Nike">Nike</option>
+        <option value="Taylormade">Taylormade</option>
+        <option value="Ping">Ping</option>
+        <option value="Cobra">Cobra</option>
+        <option value="Adams">Adams</option>
+        <option value="Other">Other</option>
+    </select>
+    <button type = "submit">Submit Golfer</button>
+</form>
 
+<form action = "delete-golfer" method = "post">
+    <input type = "number" placeholder="Golfer #" name="golfer_id"/>
+    <button type ="submit">Delete Golfer</button>
+</form>
+
+{{#golfers}}
+{{id}}. {{golferName}} - {{sponsorName}}<br>
+{{/golfers}}
 </body>
 </html>
