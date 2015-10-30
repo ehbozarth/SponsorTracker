@@ -94,13 +94,11 @@ public class Main {
         Spark.post(
                 "/edit-golfer",
                 ((request, response) -> {
-                    String editId = request.queryParams("edit_id");
+                    String editId = request.queryParams("id");
                     try{
                         int editIdNum = Integer.valueOf(editId);
-                        golferArrayList.get(editIdNum - 1).golferName = request.queryParams("edit_golfer");
-                        for(int i = 0; i < golferArrayList.size(); i++){
-                            golferArrayList.get(i).id = i + 1;
-                        }//End of For Loop
+                        Golfer tempGolfer = golferArrayList.get(editIdNum - 1);
+                        tempGolfer.golferName = request.queryParams("edit_golfer");
                     }
                     catch (Exception e){
 
@@ -120,7 +118,35 @@ public class Main {
                 })
         );
 
+        Spark.get(
+                "/edit-golfer",
+                ((request, response) -> {
+                    HashMap m = new HashMap();
+                    String id = request.queryParams("id");
+                    m.put("id", id);
+                    return new ModelAndView(m, "edit-golfer.html");
+                }),
+                new MustacheTemplateEngine()
+        );
 
+        Spark.get(
+                "/delete-golfer",
+                ((request, response) -> {
+                    String idNum = request.queryParams("id");
+                    try{
+                        int id = Integer.valueOf(idNum);
+                        golferArrayList.remove(id-1);
+                        for(int i = 0; i< golferArrayList.size(); i++){
+                            golferArrayList.get(i).id = i + 1;
+                        }
+                    }
+                    catch (Exception e){
+
+                    }
+                    response.redirect("/");
+                    return "";
+                })
+        );//End of Spark.get() "/delete-golfer
 
     }//End of Main Method
 

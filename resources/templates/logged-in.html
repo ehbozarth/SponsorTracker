@@ -5,6 +5,7 @@ Hello, {{login-name}}'s logged in!
 <form action = "create-golfer" method = "post">
     <input type = "text" placeholder="Golfer Name" name = "golfer_name"/>
     <select name = "sponsor_name">
+        <option value="">--</option>
         <option value="Titleist">Titleist</option>
         <option value="Nike">Nike</option>
         <option value="Taylormade">Taylormade</option>
@@ -16,19 +17,9 @@ Hello, {{login-name}}'s logged in!
     <button type = "submit">Submit Golfer</button>
 </form>
 
-<form action = "delete-golfer" method = "post">
-    <input type = "number" placeholder="Golfer #" name="golfer_id"/>
-    <button type ="submit">Delete Golfer</button>
-</form>
-
-<form action="edit-golfer" method = "post">
-    <input type = "number" placeholder="Edit Golfer #" name="edit_id"/>
-    <input type = "text" placeholder="Golfer Name" name = "edit_golfer"/>
-    <button type ="submit">Edit Golfer</button>
-</form>
-
 {{#golfers}}
-{{id}}. {{golferName}} - {{sponsorName}}<br>
+{{id}}. {{golferName}} - {{sponsorName}} <a href="/edit-golfer?id={{id}}">Edit Golfer</a>
+<a href="/delete-golfer?id={{id}}">Delete Golfer</a> <br>
 {{/golfers}}
 
 <form action="logout" method = "post">
