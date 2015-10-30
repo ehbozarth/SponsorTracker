@@ -20,12 +20,12 @@ public class Main {
                 ((request, response) -> {
                     Session session = request.session();
                     String loginName = session.attribute("login_name");
-                    if (loginName == null) {
-                        return new ModelAndView(new HashMap(), "not-logged-in.html");
-                    }//End of If loginName == Null
                     HashMap m = new HashMap();
                     m.put("login-name", loginName);
                     m.put("golfers", golferArrayList);
+                    if (loginName == null) {
+                        return new ModelAndView(m, "not-logged-in.html");
+                    }//End of If loginName == Null
                     return new ModelAndView(m, "logged-in.html");
 
                 }),
@@ -61,10 +61,12 @@ public class Main {
         Spark.post(
                 "/create-golfer",
                 ((request, response) -> {
+                    //ArrayList<Golfer> tempList = golferArrayList;
                     Golfer tempGolfer = new Golfer();
                     tempGolfer.id = golferArrayList.size() + 1;
                     tempGolfer.golferName = request.queryParams("golfer_name");
                     tempGolfer.sponsorName = request.queryParams("sponsor_name");
+                    //tempList.add(tempGolfer);
                     golferArrayList.add(tempGolfer);
                     response.redirect("/");
                     return "";
@@ -88,6 +90,36 @@ public class Main {
                     return "";
                 })
         );//End of Spark.post() /delete-golfer
+
+        Spark.post(
+                "/edit-golfer",
+                ((request, response) -> {
+                    String editId = request.queryParams("edit_id");
+                    try{
+                        int editIdNum = Integer.valueOf(editId);
+                        golferArrayList.get(editIdNum - 1).golferName = request.queryParams("edit_golfer");
+                        for(int i = 0; i < golferArrayList.size(); i++){
+                            golferArrayList.get(i).id = i + 1;
+                        }//End of For Loop
+                    }
+                    catch (Exception e){
+
+                    }
+                    response.redirect("/");
+                    return "";
+                })
+        );//End of Spark.post "/edit-golfer"
+
+        Spark.post(
+                "/logout",
+                ((request, response) -> {
+                    Session session = request.session();
+                    session.invalidate();
+                    response.redirect("/");
+                    return "";
+                })
+        );
+
 
 
     }//End of Main Method

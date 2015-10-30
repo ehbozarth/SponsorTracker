@@ -21,8 +21,16 @@ Hello, {{login-name}}'s logged in!
     <button type ="submit">Delete Golfer</button>
 </form>
 
+<form action="edit-golfer" method = "post">
+    <input type = "number" placeholder="Edit Golfer #" name="edit_id"/>
+    <input type = "text" placeholder="Golfer Name" name = "edit_golfer"/>
+    <button type ="submit">Edit Golfer</button>
+</form>
+
 {{#golfers}}
 {{id}}. {{golferName}} - {{sponsorName}}<br>
 {{/golfers}}
-</body>
-</html>
+
+<form action="logout" method = "post">
+    <button type="submit">Log Out</button>
+</form>
