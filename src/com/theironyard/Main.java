@@ -116,7 +116,7 @@ public class Main {
                     response.redirect("/");
                     return "";
                 })
-        );
+        );//End of Spark.post() "/logout""
 
         Spark.get(
                 "/edit-golfer",
@@ -127,7 +127,7 @@ public class Main {
                     return new ModelAndView(m, "edit-golfer.html");
                 }),
                 new MustacheTemplateEngine()
-        );
+        );//End of Spark.get() "/edit-golfer"
 
         Spark.get(
                 "/delete-golfer",
