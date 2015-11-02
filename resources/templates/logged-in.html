@@ -17,9 +17,10 @@ Hello, {{login-name}}'s logged in!
     <button type = "submit">Submit Golfer</button>
 </form>
 
+
 {{#golfers}}
-{{id}}. {{golferName}} - {{sponsorName}} <a href="/edit-golfer?id={{id}}">Edit Golfer</a>
-<a href="/delete-golfer?id={{id}}">Delete Golfer</a> <br>
+{{id}}. {{golferName}} - {{sponsorName}} {{#authorized}}<a href="/edit-golfer?id={{id}}">Edit Golfer</a>
+<a href="/delete-golfer?id={{id}}">Delete Golfer</a> {{/authorized}}<br>
 {{/golfers}}
 
 <form action="logout" method = "post">

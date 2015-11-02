@@ -52,6 +52,10 @@ public class Main {
                     Session session = request.session();
                     session.attribute("login_name", loginName);
 
+                    for(Golfer golfer : golferArrayList){
+                        golfer.authorized = golfer.userName.equals(loginName);
+                    }
+
                     response.redirect("/");
                     return "";
                 })
@@ -62,10 +66,13 @@ public class Main {
                 "/create-golfer",
                 ((request, response) -> {
                     //ArrayList<Golfer> tempList = golferArrayList;
+                    Session session = request.session();
                     Golfer tempGolfer = new Golfer();
                     tempGolfer.id = golferArrayList.size() + 1;
                     tempGolfer.golferName = request.queryParams("golfer_name");
                     tempGolfer.sponsorName = request.queryParams("sponsor_name");
+                    tempGolfer.userName = session.attribute("login_name");
+                    tempGolfer.authorized = true;
                     //tempList.add(tempGolfer);
                     golferArrayList.add(tempGolfer);
                     response.redirect("/");
