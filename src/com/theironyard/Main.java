@@ -171,7 +171,7 @@ public static Golfer selectEntry(Connection conn, int id) throws SQLException{
                     response.redirect("/");
                     return "";
                     */
-                    response.redirect(request.headers("Referer"));
+                    response.redirect("/");
                     return "";
                 })
         );//End of Spark.post() /create-golfer
