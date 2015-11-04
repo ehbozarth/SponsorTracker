@@ -142,7 +142,7 @@ public static Golfer selectEntry(Connection conn, int id) throws SQLException{
                 "/create-golfer",
                 ((request, response) -> {
                     Session session = request.session();
-                    String userName = request.queryParams("login_name");
+                    String userName = session.attribute("login_name");
                     if(userName == null){
                         Spark.halt(403);
                     }
@@ -255,6 +255,16 @@ public static Golfer selectEntry(Connection conn, int id) throws SQLException{
         );//End of Spark.get() "/delete-golfer
 
         */
+
+        Spark.post(
+                "/logout",
+                ((request, response) -> {
+                    Session session = request.session();
+                    session.invalidate();
+                    response.redirect("/");
+                    return "";
+                })
+        );//End of Spark.post() "/logout""
 
     }//End of Main Method
 
